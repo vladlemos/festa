@@ -1,38 +1,32 @@
-const countdown = document.querySelector('.countdown');
+var target_date = new Date('2018-12-07 17:00:00')
+var days, hours, minutes, seconds; // variables for time units
 
-// Set Launch Date (ms)
-const launchDate = new Date('Dez 7, 2018 16:00:00').getTime();
+var countdown = document.getElementById("tiles"); // get tag element
 
-// Update every second
-const intvl = setInterval(() => {
-  // Get todays date and time (ms)
-  const now = new Date().getTime();
+getCountdown();
 
-  // Distance from now and the launch date (ms)
-  const distance = launchDate - now;
+setInterval(function () { getCountdown(); }, 1000);
 
-  // Time calculation
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+function getCountdown(){
 
-  // Display result
-  countdown.innerHTML = `
-  <div>${days}<span>Days</span></div> 
-  <div>${hours}<span>Hours</span></div>
-  <div>${mins}<span>Minutes</span></div>
-  <div>${seconds}<span>Seconds</span></div>
-  `;
+	// find the amount of "seconds" between now and target
+	var current_date = new Date().getTime();
+	var seconds_left = (target_date - current_date) / 1000;
 
-  // If launch date is reached
-  if (distance < 0) {
-    // Stop countdown
-    clearInterval(intvl);
-    // Style and output text
-    countdown.style.color = '#17a2b8';
-    countdown.innerHTML = 'Launched!';
-  }
-}, 1000);
+	days = pad( parseInt(seconds_left / 86400) );
+	seconds_left = seconds_left % 86400;
+		 
+	hours = pad( parseInt(seconds_left / 3600) );
+	seconds_left = seconds_left % 3600;
+		  
+	minutes = pad( parseInt(seconds_left / 60) );
+	seconds = pad( parseInt( seconds_left % 60 ) );
+
+	// format countdown string + set tag value
+	countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>"; 
+}
+
+function pad(n) {
+	return (n < 10 ? '0' : '') + n;
+}
+
