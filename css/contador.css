@@ -185,8 +185,18 @@ body{
 .music-toggle {
   cursor: pointer;
   font-size: 20px;
-  position: relative;
+  /*position: relative;*/
+  font-family: arial, sans-serif;
+
+  position: fixed;
+  top: 0px;
+  right: 15px;
+  height: 50px;
+  width: 250px;
+  margin-bottom: 20px;
 }
+
+
 .music-toggle:after {
   content: "";
   display: block;
@@ -199,3 +209,4 @@ body{
 .music-toggle:hover:after {
   width: 100%;
 }
+
